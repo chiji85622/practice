@@ -1,6 +1,7 @@
 // jest.mock('../../src/demo')
 import cloneDeepArray from '../helpers/cloneDeepArray';
 import compare from '../helpers/compare';
+import generateArraySize from '../helpers/generateArraySize';
 import generateRandomArray from '../helpers/generateRandomArray';
 
 function test(arr, cd) {
@@ -19,28 +20,28 @@ function test(arr, cd) {
 }
 
 describe('test', () => {
-  const mockCallback = jest.fn(compare);
+	const mockCallback = jest.fn(compare);
 
-  const res=[]
+	const res = [];
 
 	afterAll(() => {
-    console.log(res);
+		console.table(res);
 	});
 
 	for (let j = 0; j < 2; j++) {
-		const size = 10 + 10 * j;
+		const size = generateArraySize(j, 10, 1);
 		it(`第${j + 1}次,随机数组长度为：${size}`, () => {
 			const target = generateRandomArray(size);
 			const sorted = cloneDeepArray(target).sort((a, b) => a - b);
 
 			const targetTest = cloneDeepArray(target);
 			test(targetTest, mockCallback);
-      expect(targetTest).toEqual(sorted);
-      res.push({
-        size,
-        calls:mockCallback.mock.calls.length
-      })
-      mockCallback.mockClear();
+			expect(targetTest).toEqual(sorted);
+			res.push({
+				size,
+				test: mockCallback.mock.calls.length
+			});
+			mockCallback.mockClear();
 		});
 	}
 });
