@@ -1,4 +1,3 @@
-import compare from './compare';
 export default function(size) {
 	const bit = size.toString().length;
 	const multiple = Math.pow(10, bit);
