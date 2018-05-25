@@ -1,68 +1,38 @@
-import cloneDeepArray from '../../helpers/cloneDeepArray';
-import generateArraySize from '../../helpers/generateArraySize';
-import generateRandomArray from '../../helpers/generateRandomArray';
-
+import createSortTest from '../../helpers/createSortTest'
 import sort from '../../../src/sort/selectionSort'
 
-const mockCompare = jest.fn().mockReturnValue(true);
-const mockExchange = jest.fn().mockReturnValue(true);
+createSortTest({
+  method:sort,
+  test:3,
+  initSize:1000,
+  incrementing:1000,
+})
 
-describe('选择排序相同数量的随机数据排序的时间复杂度', () => {
+/**
+ selectionSort,多次相同序列长度
+    √ 第1次,序列长度为：1000 (340ms)
+    √ 第2次,序列长度为：1000 (323ms)
+    √ 第3次,序列长度为：1000 (303ms)
+  selectionSort,不同长度的序列
+    √ 第1次,序列长度为：1000 (311ms)
+    √ 第2次,序列长度为：2000 (1311ms)
+    √ 第3次,序列长度为：3000 (2990ms)
 
-	const res = [];
+  console.log console.js:328
+    ┌─────────┬──────┬────────┬─────────┬──────────┐
+    │ (index) │ size │ native │ compare │ exchange │
+    ├─────────┼──────┼────────┼─────────┼──────────┤
+    │    0    │ 1000 │  9879  │ 499500  │   995    │
+    │    1    │ 1000 │ 10090  │ 499500  │   992    │
+    │    2    │ 1000 │  9846  │ 499500  │   991    │
+    └─────────┴──────┴────────┴─────────┴──────────┘
 
-	afterAll(() => {
-		console.table(res);
-	});
-
-	for (let j = 0; j < 3; j++) {
-    const size = generateArraySize(j, 1000, 0);
-    
-		test(`第${j + 1}次,随机数组长度为：${size}`, () => {
-			const target = generateRandomArray(size);
-			const sorted = cloneDeepArray(target).sort((a, b) => a - b);
-
-			const targetTest = sort(cloneDeepArray(target),mockCompare,mockExchange);
-		
-      expect(targetTest).toEqual(sorted);
-      
-			res.push({
-				size,
-        compare: mockCompare.mock.calls.length,
-        exchange:mockExchange.mock.calls.length
-      });
-      
-      mockCompare.mockClear();
-      mockExchange.mockClear();
-		});
-	}
-});
-
-describe('选择排序不同数量的随机数据排序的时间复杂度', () => {
-	const res = [];
-
-	afterAll(() => {
-		console.table(res);
-	});
-
-	for (let j = 0; j < 3; j++) {
-		//6000-40s 5000-16s
-    const size = generateArraySize(j, 1000, 1000);
-    
-		test(`第${j + 1}次,随机数组长度为：${size}`, () => {
-			const target = generateRandomArray(size);
-			const sorted = cloneDeepArray(target).sort((a, b) => a - b);
-
-			const targetTest = sort(cloneDeepArray(target),mockCompare,mockExchange);
-		
-			expect(targetTest).toEqual(sorted);
-			res.push({
-				size,
-				compare: mockCompare.mock.calls.length,
-        exchange:mockExchange.mock.calls.length
-			});
-			mockCompare.mockClear();
-      mockExchange.mockClear();
-		});
-	}
-});
+  console.log console.js:328
+    ┌─────────┬──────┬────────┬─────────┬──────────┐
+    │ (index) │ size │ native │ compare │ exchange │
+    ├─────────┼──────┼────────┼─────────┼──────────┤
+    │    0    │ 1000 │  9766  │ 499500  │   995    │
+    │    1    │ 2000 │ 22584  │ 1999000 │   1991   │
+    │    2    │ 3000 │ 35085  │ 4498500 │   2994   │
+    └─────────┴──────┴────────┴─────────┴──────────┘
+ */

@@ -13,88 +13,68 @@
  *    操作；
  *  3.递归地（recursive）把小于基准值元素的子数列和
  *    大于基准值元素的子数列排序。
- * 
- * 性能测试
- * 
- * 插入排序相同数量的随机数据排序的时间复杂度
-    √ 第1次,随机数组长度为：1000 (371ms)
-    √ 第2次,随机数组长度为：1000 (299ms)
-    √ 第3次,随机数组长度为：1000 (316ms)
-    ┌─────────┬──────┬─────────┬──────────┐
-    │ (index) │ size │ compare │ exchange │
-    ├─────────┼──────┼─────────┼──────────┤
-    │    0    │ 1000 │ 258091  │  258091  │
-    │    1    │ 1000 │ 252101  │  252101  │
-    │    2    │ 1000 │ 257306  │  257306  │
-    └─────────┴──────┴─────────┴──────────┘
-
- * 插入排序不同数量的随机数据排序的时间复杂度
-    √ 第1次,随机数组长度为：1000 (315ms)
-    √ 第2次,随机数组长度为：2000 (1376ms)
-    √ 第3次,随机数组长度为：3000 (3097ms)
-    ┌─────────┬──────┬─────────┬──────────┐
-    │ (index) │ size │ compare │ exchange │
-    ├─────────┼──────┼─────────┼──────────┤
-    │    0    │ 1000 │ 250185  │  250185  │
-    │    1    │ 2000 │ 997278  │  997278  │
-    │    2    │ 3000 │ 2209303 │ 2209303  │
-    └─────────┴──────┴─────────┴──────────┘
  */
 
 /**
- * 归并排序
+ * 快速排序
  * @param {Array} arr
  * @param {Function} commpare
  * @param {Function} exchange
  * @return {Array}
  */
+let aa = 0;
 const sort = function(arr, compare, exchange) {
-	divide(arr, 0, arr.length - 1);
+  divide(arr, 0, arr.length - 1);
+  
+  return arr
 
-	function divide(arr, low, high) {
-		if (low < high) {
-			let middle = Math.floor((low + high) / 2);
-			divide(arr, low, middle);
-			divide(arr, middle + 1, high);
-			merge(arr, low, middle, high);
-		}
-	}
+  function divide(arr, low, high) {
+    if (low < high) {
+      let partitionIndex = partitionBook(arr, low, high);
+      divide(arr, low, partitionIndex - 1);
+      divide(arr, partitionIndex + 1, high);
+    }
+  }
 
-	function merge(arr, low, middle, high) {
-        const tem = arr.slice(low, high + 1);
-		let l = low,
-			r = middle + 1,
-			offset = low;
+  function partition(arr, low, high) {
+    let pivot = low;
+    let index = low + 1;
 
-		for (let i = low; i <= high; i++) {
-            compare()
-            exchange()
-			if (l > middle) {
-				arr[i] = tem[r - offset];
-				r++;
-			} else if (r > high) {
-				arr[i] = tem[l - offset];
-				l++;
-			} else if (tem[l - offset] < tem[r - offset]) {
-				arr[i] = tem[l - offset];
-				l++;
-			} else {
-				arr[i] = tem[r - offset];
-				r++;
-			}
-		}
-	}
+    for (let i = index; i <= high; i++) {
+      compare();
+      if (arr[i] < arr[pivot]) {
+        exchange();[arr[i], arr[index]] = [arr[index], arr[i]];
+        index++;
+      }
+    }
+
+    exchange();[arr[index - 1], arr[pivot]] = [arr[pivot], arr[index - 1]];
+
+    return index - 1;
+  }
+
+  function partitionBook(arr, low, high) {
+    let i = low;
+    let j = high + 1;
+    let pivot = arr[low];
+
+    while (true) {
+      while (compare() && arr[++i] < pivot) if (i === high) break;
+      while (compare() && arr[--j] > pivot) if (j === low) break;
+      if (i >= j) break;
+			exchange();
+			[arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    exchange();
+    [arr[low], arr[j]] = [arr[j], arr[low]];
+
+    return j;
+  }
 };
 
-// export default sort;
-
-let a = [ 10, 9, 8, 6, 3, 2, 9 ];
-let c=()=>true
-
-sort(a,c,c);
-console.log(a);
+export default sort;
 
 /**
-   * 将序列根据间隔分割成若干子序列，分别进行插入排序，将间隔不断缩小，知道1时为一个一般的插入排序
-   * 将序列慢慢的转化为时间复杂度接近o(n)的插入排序
-   */
+ * 将序列根据间隔分割成若干子序列，分别进行插入排序，将间隔不断缩小，知道1时为一个一般的插入排序
+ * 将序列慢慢的转化为时间复杂度接近o(n)的插入排序
+ */

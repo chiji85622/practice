@@ -12,55 +12,28 @@
  *  3.针对所有的元素重复以上的步骤，除了最后一个；
  *  4.重复步骤1~3，直到排序完成。
  * 
- * 性能测试
- * 
- * 冒泡排序相同数量的随机数据排序的时间复杂度
-    √ 第1次,随机数组长度为：1000 (926ms)
-    √ 第2次,随机数组长度为：1000 (1005ms)
-    √ 第3次,随机数组长度为：1000 (979ms)
-    ┌─────────┬──────┬─────────┬──────────┐
-    │ (index) │ size │ compare │ exchange │
-    ├─────────┼──────┼─────────┼──────────┤
-    │    0    │ 1000 │ 499500  │  238634  │
-    │    1    │ 1000 │ 499500  │  247550  │
-    │    2    │ 1000 │ 499500  │  255750  │
-    └─────────┴──────┴─────────┴──────────┘
-
- * 冒泡排序不同数量的随机数据排序的时间复杂度
-    √ 第1次,随机数组长度为：1000 (964ms)
-    √ 第2次,随机数组长度为：2000 (4025ms)
-    √ 第3次,随机数组长度为：3000 (9540ms)
-    ┌─────────┬──────┬─────────┬──────────┐
-    │ (index) │ size │ compare │ exchange │
-    ├─────────┼──────┼─────────┼──────────┤
-    │    0    │ 1000 │ 499500  │  254862  │
-    │    1    │ 2000 │ 1999000 │  984087  │
-    │    2    │ 3000 │ 4498500 │ 2228828  │
-    └─────────┴──────┴─────────┴──────────┘
- */
 
 /**
  * 冒泡排序
- * @param {Array} arr 
- * @param {Function} commpare 
- * @param {Function} exchange 
- * @return {Array} 
+ * @param {Array} arr
+ * @param {Function} commpare
+ * @param {Function} exchange
+ * @return {Array}
  */
 const bubbleSort = function(arr, commpare, exchange) {
-	var len = arr.length;
-	for (var i = 0; i < len; i++) {
-		for (var j = 0; j < len - 1 - i; j++) {
-			if (commpare() && arr[j] > arr[j + 1]) {
-				exchange();
-				[ arr[j], arr[j + 1] ] = [ arr[j + 1], arr[j] ];
-			}
-		}
-	}
-	return arr;
+  var len = arr.length;
+  for (var i = 0; i < len; i++) {
+    for (var j = 0; j < len - 1 - i; j++) {
+      if (commpare() && arr[j] > arr[j + 1]) {
+        exchange();
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
 };
 
-export default bubbleSort;
-
+export default  bubbleSort;
 /**
  * 把大的往后交换，左边的是无序区，右边的是有序区
  * 每次循环将无序区中的最大值的往后推，直到无序区的最后，成为有序区的第一位
