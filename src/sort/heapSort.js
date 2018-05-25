@@ -56,13 +56,12 @@ const sort = function(arr, compare, exchange) {
 
   function heapSort(arr) {
     let len =arr.length;
+
     //建立堆
-   
     for (var i = Math.floor(len / 2); i >= 0; i--) {
       heapify(arr, i,len);
     }
    
-
     for (var i = arr.length - 1; i > 0; i--) {
       // 将堆顶保存至序列尾部
       swap(arr, 0, i);

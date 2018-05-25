@@ -72,6 +72,7 @@ const sort = function(arr, compare, exchange) {
 export default sort;
 
 /**
+ * 正常使用这个就可以
  * 将序列根据间隔分割成若干子序列，分别进行插入排序，将间隔不断缩小，知道1时为一个一般的插入排序
  * 将序列慢慢的转化为时间复杂度接近o(n)的插入排序
  */

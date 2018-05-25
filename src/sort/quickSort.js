@@ -67,7 +67,6 @@ const sort = function(arr, compare, exchange) {
     }
     exchange();
     [arr[low], arr[j]] = [arr[j], arr[low]];
-
     return j;
   }
 };
