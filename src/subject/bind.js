@@ -1,20 +1,27 @@
 // 实现es5中的bind
-
 Function.prototype.bind = Function.prototype.bind || function () {
   const self = this;
   const context = [].shift.call(arguments);
   const args = [].slice.call(arguments);
-  return function() {
-    console.log(arguments);
-    return self.apply(context, [].concat.call(args, [].slice.call(arguments)));
-  };
-};
+	return function () {
+	  console.log(arguments);
+	  return self.apply(context, [].concat.call(args, [].slice.call(arguments)));
+	};
+}
+//
+// 测试
+function a(m, n, o) {
+  return `${this.name} ${m} ${n} ${o}`;
+}
 
-//测试  
-function a(m, n, o){  
-  return this.name + ' ' + m + ' ' + n + ' ' + o;  
-}  
+const b = { name: 'kong' };
 
-var b = {name : 'kong'};  
+console.log(a.bind(b, 7, 8)(9));
 
-console.log(a.bind(b, 7, 8)(9));     
+{
+  let aaa=function aa(){
+    console.log(1)
+  }
+  aaa()
+}
+aaa()
