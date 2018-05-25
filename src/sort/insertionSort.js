@@ -47,31 +47,15 @@
  * @return {Array}
  */
 const insertionSort = function(arr, compare, exchange) {
-  const len = arr.length;
+	const len = arr.length;
 
-  let preIndex,// 有序区序号，从后向前扫描
-   current;// 待插入元素
+	for (let i = 1; i < len; i++) {
+		for (let j = i; j >= 0 && arr[j] < arr[j - 1]; j--) {
+			[ arr[j], arr[j - 1] ] = [ arr[j - 1], arr[j] ];
+		}
+	}
 
-  for (let i = 1; i < len; i++) {
-    // 待插入元素
-    current = arr[i];
-    // 有序区组的最大序号
-    preIndex = i - 1;
-
-    // 有序数区，序号大于等于0 且 当前有序区元素比待插入元素大，
-    // 则该有序区元素后移，有序区序号前移动
-    while (compare() && preIndex >= 0 && arr[preIndex] > current) {
-      exchange();
-      arr[preIndex + 1] = arr[preIndex];
-      preIndex--;
-    }
-
-    // 将待插入元素插入到有序区的位置
-    exchange();
-    arr[preIndex + 1] = current;
-  }
-
-  return arr;
+	return arr;
 };
 
 export default insertionSort;

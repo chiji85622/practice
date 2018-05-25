@@ -47,21 +47,26 @@
  * @return {Array} 
  */
 const selectionSort = function(arr, commpare, exchange) {
-  let len = arr.length;
-  let min = 0;
-  for (let i = 0; i < len - 1; i++) {
-    min = i;
-    for (let j = i + 1; j < len; j++) {
-      if (commpare() && arr[min]>arr[j]) {
-        min = j;
-      }
-    }
-    if (min !== i) {
-      exchange();
-      [arr[i],arr[min]]= [arr[min],arr[i]]
-    }
-  }
-  return arr;
+	let len = arr.length;
+	let min = 0;
+	for (let i = 0; i < len - 1; i++) {
+		min = i;
+		for (let j = i + 1; j < len; j++) {
+			if (commpare() && arr[min] > arr[j]) {
+				min = j;
+			}
+		}
+		if (min !== i) {
+			exchange();
+			[ arr[i], arr[min] ] = [ arr[min], arr[i] ];
+		}
+	}
+	return arr;
 };
 
 export default selectionSort;
+
+/**
+ * 每次选择最小值，则左边为有序区，右边为无序区，选择最大值这相反；
+ * 每次遍历整个无序区，找出最小值的序号，最后与有序区的最后位交换
+ */

@@ -46,17 +46,22 @@
  * @param {Function} exchange 
  * @return {Array} 
  */
-const bubbleSort= function (arr, commpare, exchange) {
-  var len = arr.length;
-  for (var i = 0; i < len; i++) {
-    for (var j = 0; j < len - 1 - i; j++) {
-      if (commpare() && arr[j]>arr[j + 1]) {
-        exchange();
-        [arr[j],arr[j+1]]= [arr[j+1],arr[j]]
-      }
-    }
-  }
-  return arr;
-}
+const bubbleSort = function(arr, commpare, exchange) {
+	var len = arr.length;
+	for (var i = 0; i < len; i++) {
+		for (var j = 0; j < len - 1 - i; j++) {
+			if (commpare() && arr[j] > arr[j + 1]) {
+				exchange();
+				[ arr[j], arr[j + 1] ] = [ arr[j + 1], arr[j] ];
+			}
+		}
+	}
+	return arr;
+};
 
 export default bubbleSort;
+
+/**
+ * 把大的往后交换，左边的是无序区，右边的是有序区
+ * 每次循环将无序区中的最大值的往后推，直到无序区的最后，成为有序区的第一位
+ */
